@@ -30,7 +30,11 @@ const LoginForm = (props) => {
           </button>
       </form>
     );
-}
+};
+
+LoginForm.propTypes = {
+    onSubmit: React.PropTypes.func.isRequired
+};
 
 export default reduxForm(
     {

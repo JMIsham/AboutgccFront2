@@ -3,24 +3,25 @@ import createLogger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import rootReducer from '../reducers';
 import createSagaMiddleweare , {END} from 'redux-saga';
-import sagas from '../Saga';
+import rootSaga from '../Saga';
 
 const loggerMiddleWare  = createLogger();
 const sagaMiddleweare = createSagaMiddleweare();
 function configureStoreProd(initialState) {
   const middlewares = [
     // Add other middleware on this line...
-
+      sagaMiddleweare,
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
- sagaMiddleweare
+
   ];
 
  const store = createStore(rootReducer, initialState, compose(
     applyMiddleware(...middlewares)
     )
   );
-  sagaMiddleweare.run(sagas);
+
+  sagaMiddleweare.run(rootSaga);
   store.close = () => store.dispatch(END);
   return store;
 }
@@ -28,14 +29,13 @@ function configureStoreProd(initialState) {
 function configureStoreDev(initialState) {
   const middlewares = [
     // Add other middleware on this line...
-
+    sagaMiddleweare,
     // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),
 
-    // thunk middleware can also accept an extra argument to be passed to each thunk action
-    // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
-    sagaMiddleweare,
-    loggerMiddleWare
+
+
+    loggerMiddleWare,
 
   ];
 
@@ -52,7 +52,7 @@ function configureStoreDev(initialState) {
       store.replaceReducer(nextReducer);
     });
   }
-  sagaMiddleweare.run(sagas);
+  sagaMiddleweare.run(rootSaga);
   store.close = () => store.dispatch(END);
   return store;
 }

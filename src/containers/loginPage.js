@@ -4,19 +4,19 @@
 import React from "react";
 import LoginForm from "../components/LoginForm";
 import {connect} from 'react-redux';
-import * as action from "../constants/actionTypes"
+import * as types from "../constants/actionTypes";
 class LoginPage extends React.Component{
 
-    doLogin(formData){
-        console.log(formData);
+    doLogin(formData) {
+
         this.props.dispatch({
-            type: action.LOGIN_REQUESTED,
-            payload:{
+            type: types.LOGIN_REQUESTED,
+            payload: {
                 username: formData.username,
                 password: formData.password
             }
-
-            });
+        });
+        console.log("form data",formData);
     }
     render(){
         return (

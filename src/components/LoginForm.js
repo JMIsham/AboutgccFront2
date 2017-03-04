@@ -5,6 +5,7 @@ import React from 'react';
 import {Field,reduxForm} from "redux-form";
 
 const LoginForm = (props) => {
+    console.log("test");
 
     return (
 
@@ -36,8 +37,4 @@ LoginForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired
 };
 
-export default reduxForm(
-    {
-        form: 'login'
-    }
-)(LoginForm);
+export default reduxForm({form: 'login'})(LoginForm);
